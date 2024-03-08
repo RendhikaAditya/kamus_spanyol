@@ -1,6 +1,7 @@
   import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
   import 'package:http/http.dart' as http;
+import 'package:kamus_spanyol/detail.dart';
 import 'package:logger/logger.dart';
 
 import 'model/model_kosakata.dart';
@@ -147,15 +148,28 @@ class MyHomePage extends StatefulWidget {
                     ),
                     isCari ?
                     Expanded(
-                        child: ListView.builder(
-                            itemCount: snapshot.data?.length,
-                            itemBuilder: (context, index) {
-                              Datum? data = snapshot.data?[index];
-                              return ListTile(
+                      child: ListView.builder(
+                        itemCount: snapshot.data?.length,
+                        itemBuilder: (context, index) {
+                          Datum? data = snapshot.data?[index];
+                          return Padding(
+                            padding: EdgeInsets.all(8),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PageDetail(data),
+                                  ),
+                                );
+                              },
+                              child: ListTile( // Menggunakan ListTile untuk menampilkan judul dan efek onTap
                                 title: Text(data!.kosakata.toString()),
-                              );
-                            }
-                        )
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ) : CreateFilterList(snapshot.data),
                     // Anda perlu menambahkan implementasi CreateFilterList()
                   ],
